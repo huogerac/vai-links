@@ -1,0 +1,10 @@
+-r requirements.txt
+
+# Code style / formatting
+black==23.3.0
+isort==5.12.0
+flake8==5.0.4
+
+#Testes
+pytest==7.2.2
+pytest-django==4.5.2

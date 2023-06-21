@@ -1,0 +1,12 @@
+.venv/
+__pycache__
+dkdata
+*.pyc
+.coverage
+coverage.xml
+htmlcov/
+.idea
+/vailinks.log
+/static
+
+/apimock/node_modules

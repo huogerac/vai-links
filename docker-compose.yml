@@ -1,0 +1,39 @@
+services:
+  backend:
+    image: back-vailinks
+    hostname: back-vailinks
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    expose:
+      - "8000"
+    volumes:
+      - ./:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: "postgres:13.3-alpine"
+    ports:
+      - 15432:5432
+    expose:
+      - "15432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
