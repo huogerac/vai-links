@@ -10,7 +10,8 @@ class LinkSchemaIn(Schema):
 class LinkSchema(Schema):
     id: Optional[int]
     description: str
-    done: bool = False
+    keyword: str
+    link: str
 
 
 class ListLinksSchema(Schema):

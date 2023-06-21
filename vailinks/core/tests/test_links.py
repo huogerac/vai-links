@@ -27,6 +27,4 @@ def test_listar_link_com_login(client, db):
     data = resp.json()
 
     assert resp.status_code == 200
-    assert data == {
-        "links": [{"description": "walk the dog", "done": False, "id": ANY}]
-    }
+    assert data == {"links": [{"description": "walk the dog", "id": ANY}]}

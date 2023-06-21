@@ -10,3 +10,7 @@ def add_link(new_link):
 def list_links():
     links = Link.objects.all()
     return [item.to_dict_json() for item in links]
+
+
+def find(query):
+    return Link.objects.filter(keyword__icontains=query).first()

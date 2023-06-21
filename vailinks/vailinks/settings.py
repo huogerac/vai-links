@@ -60,6 +60,7 @@ LOCAL_APPS = [
     "vailinks.base",
     "vailinks.accounts",
     "vailinks.core",
+    "vailinks.redirects",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
