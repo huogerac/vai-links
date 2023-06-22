@@ -6,7 +6,7 @@ from vailinks.core.models import Link
 
 
 def test_criar_link_sem_login(client):
-    resp = client.post("/api/core/links/add", {"new_link": "walk the dog"})
+    resp = client.post("/api/core/links/add", {"new_link": "djavue"})
     assert resp.status_code == 401
 
 
@@ -20,11 +20,24 @@ def test_criar_link_com_login(client, db):
 
 def test_listar_link_com_login(client, db):
     fixtures.user_jon()
-    Link.objects.create(description="walk the dog")
+    Link.objects.create(
+        description="djavue",
+        link="https://github.com/evolutio/djavue3",
+        keyword="djavue",
+    )
 
     client.force_login(User.objects.get(username="jon"))
     resp = client.get("/api/core/links/list")
     data = resp.json()
 
     assert resp.status_code == 200
-    assert data == {"links": [{"description": "walk the dog", "id": ANY}]}
+    assert data == {
+        "links": [
+            {
+                "description": "djavue",
+                "id": ANY,
+                "keyword": "djavue",
+                "link": "https://github.com/evolutio/djavue3",
+            }
+        ]
+    }
