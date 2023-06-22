@@ -31,13 +31,13 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
-    default="vailinks.fly.dev",
+    default="vai.fly.dev",
     cast=Csv(),
 )
 
 CSRF_TRUSTED_ORIGINS = config(
     "CSRF_TRUSTED_ORIGINS",
-    default="https://vailinks.fly.dev",
+    default="https://vai.fly.dev",
     cast=Csv(),
 )
 
@@ -48,12 +48,12 @@ DJANGO_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
 ]
 
 THIRD_PARTY_APPS = [
     "django_extensions",
-    "whitenoise.runserver_nostatic",
 ]
 
 LOCAL_APPS = [
