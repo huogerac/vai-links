@@ -6,7 +6,6 @@ from ninja import Router, Form
 
 from .schemas import LoggedUserSchema, UserSchema
 
-from typing import Optional
 
 router = Router()
 
