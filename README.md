@@ -1,6 +1,38 @@
 # 🏆 vailinks
 
+## WHY?
+
+É difícil lembrar das URLs que precisamos no dia a dia. Também queremos algo mais fácil que achar um bookmark salvo e por último algo que seja fácil de compartilhar e memorizar.
+Não estou falando de um encurtador de URLs!
+
+## WHAT?
+
+Imagine você digitar no seu navegador: "vai djavue" e você redirecionado para o incrível template de projetos django [https://github.com/evolutio/djavue3](https://github.com/evolutio/djavue3), ou você digita "vai git" e uma página web lista os melhores LINKS sobre Git.
+Ahh se não quiser utilizar seu navegador, pode configurar seu "laucher" para fazer exatamente a mesma coisa!
+
+![vai-demo](./images/vailinks-demo-v1.gif)
+
+## HOW?
+
+Este projeto, ainda na fase bem inicial (rascunho) tem inicialmente um URL que sabe procurar por palavras chaves e quando encontra um link faz a ação apropriada, exemplo:
+
+```
+djavue  👉  https://vai.fly.dev/api/core/search?q=djavue  👉  https://github.com/evolutio/djavue3
+```
+
+Desta maneira podemos cadastrar a url do "vai" no launcher no seu navegador favorito! simples assim!
+E é claro, precisar ter uma conta para poder registrar novos links! 
+
+![launcher-config](./images/launcher-config.jpg)
+
+## Gostou?
+
+Achou legal a ideia, achou algum problema! sugestões? 👉 Entre em contato!
+
+
 ## Entendendo o projeto
+
+Este projeto foi criado utilizando o gerador de projetos [D-jà Vue](https://github.com/evolutio/djavue3)
 
 ## BACKEND Django API
 
@@ -31,8 +63,7 @@ Visao geral
 vailinks                   👉 Pasta raiz do projeto
  ├── README.md
  ├── manage.py                     👉 Django CLI (Ponto de entrada)
- ├── requirements.txt              👉 Dependencias principais
- ├── requirements-dev.txt          👉 Dependencias locais (pode mudar no modo Poetry)
+ ├── pyproject.toml                👉 Dependencias principais
  ├── docker-compose.yml            👉 Descritor docker para rodar local
  ├── Dockerfile                    👉 Receita para rodar projeto
  ├── tox.ini
