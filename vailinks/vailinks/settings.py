@@ -41,6 +41,15 @@ CSRF_TRUSTED_ORIGINS = config(
     cast=Csv(),
 )
 
+# CORS
+# if DEBUG:
+#     CORS_ALLOW_CREDENTIALS = config("CORS_ALLOW_CREDENTIALS", default=False, cast=bool)
+#     CORS_ALLOWED_ORIGINS = config(
+#         "CSRF_TRUSTED_ORIGINS",
+#         default="http://localhost:3000",
+#         cast=Csv(),
+#     )
+
 # Application definition
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -48,19 +57,22 @@ DJANGO_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
 ]
 
 THIRD_PARTY_APPS = [
     "django_extensions",
+    "whitenoise.runserver_nostatic",
 ]
+
+# CORS
+# if DEBUG:
+#     THIRD_PARTY_APPS += ['corsheaders']
 
 LOCAL_APPS = [
     "vailinks.base",
     "vailinks.accounts",
     "vailinks.core",
-    "vailinks.redirects",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -75,6 +87,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# CORS
+# if DEBUG:
+#     before_common = MIDDLEWARE.index("django.middleware.common.CommonMiddleware")
+#     MIDDLEWARE.insert(before_common, "corsheaders.middleware.CorsMiddleware")
 
 ROOT_URLCONF = "vailinks.vailinks.urls"
 
@@ -101,7 +118,7 @@ AUTH_USER_MODEL = "accounts.User"
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASE_URL = config("DATABASE_URL")
+DATABASE_URL = config("DATABASE_URL", "sqlite:///db_local.sqlite3")
 
 DATABASES = {
     "default": dj_database_url.parse(
@@ -146,14 +163,63 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = config("DJANGO_STATIC_ROOT", default=os.path.join(BASE_DIR, "static"))
+STATIC_ROOT = config(
+    "DJANGO_STATIC_ROOT", default=os.path.join(BASE_DIR.parent, "static")
+)
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOG_LEVEL = config("LOG_LEVEL", default="INFO")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module}:{lineno} {process:d} {message}",
+            "style": "{",
+        },
+        "console": {
+            "format": "{levelname} {asctime} {module}:{lineno} {process:d} {message}",
+            "style": "{",
+        },
+        "django": {
+            "format": "{levelname} {asctime} {module}:{lineno} {process:d} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
+        "django": {"class": "logging.StreamHandler", "formatter": "verbose"},
+    },
+    "loggers": {
+        "": {
+            "level": LOG_LEVEL,
+            "handlers": [
+                "console",
+            ],
+        },
+        "django.server": {
+            "level": LOG_LEVEL,
+            "handlers": [
+                "console",
+            ],
+        },
+    },
+}
 
 # LOGGING = {
 #     'version': 1,

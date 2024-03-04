@@ -1,7 +1,10 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
-WORKDIR /app
+WORKDIR /code
 
+
+ENV POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_CACHE_DIR='/var/cache/pypoetry'
 
 
 # Install basic SO and Python
@@ -23,20 +26,26 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh && \
 
 #### Prepare BACKEND Django API
 
-COPY requirements.txt ./
-COPY requirements-dev.txt ./
+COPY pyproject.toml ./
+RUN pip install poetry
+RUN poetry install --no-dev
 
-RUN pip install -r requirements-dev.txt
 
 ENV PYTHONUNBUFFERED=1 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONIOENCODING=UTF-8
 ENV SHELL=/bin/bash LANG=en_US.UTF-8
 
+# Gets the current git commit hash
+ARG GIT_HASH
+ENV GIT_HASH=$GIT_HASH
+
 COPY . ./
+
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "vailinks.vailinks.wsgi"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "1", "vailinks.vailinks.wsgi"]
 

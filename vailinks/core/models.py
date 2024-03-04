@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Link(models.Model):
-    description = models.CharField(max_length=512, null=True, blank=True)
+    description = models.CharField(max_length=512)
     link = models.URLField(max_length=2048, unique=True, default="")
     keyword = models.CharField(max_length=64, unique=True, default="")
 

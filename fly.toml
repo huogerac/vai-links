@@ -1,17 +1,19 @@
-# fly.toml app configuration file generated for vai on 2023-06-22T14:47:55-03:00
+# fly.toml app configuration file generated for vai on 2024-03-03T21:10:10-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "vai"
-primary_region = "gru"
-console_command = "/code/manage.py shell"
+app = 'vai'
+primary_region = 'gru'
+console_command = '/code/manage.py shell'
+
+[build]
 
 [deploy]
-  release_command = "python manage.py migrate"
+  release_command = "bash -c \"python manage.py migrate --noinput && python manage.py collectstatic --noinput\""
 
 [env]
-  PORT = "8000"
+  PORT = '8000'
 
 [http_service]
   internal_port = 8000
@@ -19,7 +21,13 @@ console_command = "/code/manage.py shell"
   auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
 
 [[statics]]
-  guest_path = "/code/static"
-  url_prefix = "/static/"
+  guest_path = '/code/static'
+  url_prefix = '/static/'

@@ -1,12 +1,37 @@
-.venv/
-__pycache__
-dkdata
-*.pyc
+### Python/Django files
+__pycache__/
+*.py[cod]
+*$py.class
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 .coverage
 coverage.xml
 htmlcov/
-.idea
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.pytest_cache/
+*.sqlite3
+pip-log.txt
+pip-delete-this-directory.txt
+static/
+staticfiles/
 /vailinks.log
-/static
-
 /apimock/node_modules
+
+
+# C extensions
+*.so
+
+# Environments
+.idea/
+.venv
+venv/
+ENV/
+.python-version

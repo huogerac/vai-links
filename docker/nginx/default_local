@@ -1,0 +1,14 @@
+server {
+    listen       7999;
+    server_name  localhost;
+
+    location /api {
+        proxy_pass http://backend:8000/api;
+    }
+    location /admin {
+        proxy_pass http://backend:8000/admin;
+    }
+    location /static {
+        proxy_pass http://backend:8000/static;
+    }
+}

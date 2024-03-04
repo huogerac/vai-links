@@ -4,7 +4,7 @@ from .models import Link
 
 
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ("description", "keyword", "link")
+    list_display = ("description", "link", "keyword")
 
 
 admin.site.register(Link, LinkAdmin)
