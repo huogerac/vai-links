@@ -1,7 +1,7 @@
 import logging
 
-from ..models import Link
 from vailinks.base.exceptions import BusinessError
+from ..models import Link, Workspace
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +26,12 @@ def list_links():
     return [item.to_dict_json() for item in links_list]
 
 
-def find(query):
+def search(workspace_name, query):
     logger.info("SERVICE find links")
-    return Link.objects.filter(keyword__icontains=query).first()
+    workspace = Workspace.objects.filter(name=workspace_name).first()
+    if not workspace:
+        raise BusinessError("Workspace not found")
+
+    return Link.objects.filter(
+        workspace_id=workspace.id, keyword__icontains=query
+    ).first()

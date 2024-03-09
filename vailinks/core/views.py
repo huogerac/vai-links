@@ -30,9 +30,9 @@ def list_links(request):
     return JsonResponse({"links": links})
 
 
-@router.get("/search")
-def search_link(request, q: str):
-    link = links_svc.find(q)
+@router.get("/{workspace}/search")
+def search_link(request, workspace: str, q: str):
+    link = links_svc.search(workspace, q)
     if not link:
         return JsonResponse(
             {"message": "Opps! Não temos link para esta palavra", "keyword": q}

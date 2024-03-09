@@ -1,10 +1,17 @@
 from django.contrib import admin
 
-from .models import Link
+from .models import Workspace, Link
 
 
-class LinkAdmin(admin.ModelAdmin):
-    list_display = ("description", "link", "keyword")
+class LinkInline(admin.TabularInline):
+    model = Link
 
 
-admin.site.register(Link, LinkAdmin)
+class WorkspaceAdmin(admin.ModelAdmin):
+    inlines = [
+        LinkInline,
+    ]
+
+
+admin.site.register(Workspace, WorkspaceAdmin)
+# admin.site.register(Link)
